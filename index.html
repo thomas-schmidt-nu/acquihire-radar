@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Acqui-hire Radar · Jul 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #f4f6fb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; min-height: 100vh; padding: 24px 16px; }
+
+.wrapper { max-width: 980px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.09); overflow: hidden; }
+
+.hdr { background: #0d1b3e; padding: 28px 32px; }
+.hdr h1 { color: #fff; font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.hdr p { color: #8ba3cc; font-size: 13px; margin-top: 6px; }
+
+.stats { display: flex; gap: 0; border-bottom: 1px solid #e0e6ef; flex-wrap: wrap; }
+.stat { padding: 18px 28px; border-right: 1px solid #e0e6ef; }
+.stat:last-child { border-right: none; margin-left: auto; }
+.stat-num { font-size: 26px; font-weight: 800; color: #0d1b3e; line-height: 1; }
+.stat-num.red { color: #b91c1c; }
+.stat-num.amber { color: #b45309; }
+.stat-num.blue { color: #1d4ed8; }
+.stat-num.green { color: #065f46; }
+.stat-label { font-size: 11px; color: #6b7a99; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 4px; }
+
+.sec-hdr { padding: 24px 32px 14px; border-bottom: 1px solid #e0e6ef; }
+.sec-label { font-size: 11px; font-weight: 700; color: #0052cc; text-transform: uppercase; letter-spacing: 1.5px; }
+.sec-desc { font-size: 12px; color: #6b7a99; margin-top: 4px; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 16px; padding: 20px 24px; }
+
+.card { border: 1px solid #e0e6ef; border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow 0.15s, border-color 0.15s; }
+.card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); border-color: #bcd0ee; }
+
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+
+.badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 9px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.badge-escalate { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.badge-identified { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.badge-monitoring { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+
+.new-tag { font-size: 9px; font-weight: 700; background: #d1fae5; color: #065f46; padding: 2px 5px; border-radius: 3px; border: 1px solid #6ee7b7; vertical-align: middle; }
+
+.card-name { font-size: 15px; font-weight: 700; color: #0d1b3e; line-height: 1.2; }
+.card-company { font-size: 12px; font-weight: 600; color: #0052cc; }
+
+.scores { display: flex; gap: 6px; flex-wrap: wrap; }
+.score { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+.q5 { background: #6d28d9; color: #fff; }
+.q4 { background: #2563eb; color: #fff; }
+.q3 { background: #0e7490; color: #fff; }
+.r5 { background: #059669; color: #fff; }
+.r4 { background: #16a34a; color: #fff; }
+.r3 { background: #65a30d; color: #fff; }
+
+.pedigree { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { font-size: 11px; background: #f1f5f9; color: #374151; padding: 2px 7px; border-radius: 3px; border: 1px solid #e5e7eb; }
+.chip-nu { background: #ede9fe; color: #4c1d95; border-color: #c4b5fd; font-weight: 600; }
+.chip-exit { background: #fef9c3; color: #713f12; border-color: #fde68a; }
+
+.signal-type { font-size: 10px; color: #6b7a99; background: #f8fafc; padding: 2px 7px; border-radius: 3px; display: inline-block; border: 1px solid #e2e8f0; }
+.signal-text { font-size: 12px; color: #374151; line-height: 1.55; }
+
+.domain-tag { font-size: 10px; font-style: italic; color: #0052cc; }
+
+.card-links { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px; margin-top: auto; }
+.card-link { font-size: 11px; color: #0052cc; text-decoration: none; display: flex; align-items: center; gap: 3px; }
+.card-link:hover { text-decoration: underline; }
+.card-link-dim { font-size: 11px; color: #9ca3af; }
+
+.signal-date { font-size: 10px; color: #9ca3af; }
+
+.spacer { height: 1px; background: #e0e6ef; }
+
+.footer { padding: 16px 32px; background: #f8fafc; border-top: 1px solid #e0e6ef; display: flex; align-items: center; justify-content: space-between; }
+.footer-left { font-size: 12px; color: #6b7a99; }
+.footer-right { font-size: 11px; color: #9ca3af; font-style: italic; }
+
+.card.escalate { border-left: 3px solid #ef4444; }
+.card.identified { border-left: 3px solid #f59e0b; }
+.card.monitoring { border-left: 3px solid #3b82f6; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="hdr">
+    <h1>🎯 Acqui-hire Radar</h1>
+    <p>CorpDev Intelligence &nbsp;·&nbsp; Jul 1–21, 2026 scan &nbsp;·&nbsp; 9 active candidates</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">9</div><div class="stat-label">Total Active</div></div>
+    <div class="stat"><div class="stat-num red">3</div><div class="stat-label">Escalate</div></div>
+    <div class="stat"><div class="stat-num amber">2</div><div class="stat-label">Identified</div></div>
+    <div class="stat"><div class="stat-num blue">4</div><div class="stat-label">Monitoring</div></div>
+    <div class="stat"><div class="stat-num green">7</div><div class="stat-label">New This Scan</div></div>
+  </div>
+
+  <div class="sec-hdr"><div class="sec-label">🔴 Escalate — Outreach Priority</div><div class="sec-desc">Q≥4 AND R≥4 · Immediate CorpDev contact recommended</div></div>
+  <div class="card-grid">
+    <div class="card escalate"><div class="card-top"><div><div class="card-name">Bruno Lerner</div><div class="card-company">Stealth</div></div><span class="badge badge-escalate">Escalate</span></div><div class="pedigree"><span class="chip chip-nu">ex-Nubank</span><span class="chip">Senior</span></div><div class="scores"><span class="score q5">Q5 &nbsp;A+</span><span class="score r5">R5 &nbsp;★★★★★</span></div><div class="signal-text">Top-tier Nubank alumni, stealth mode. Highest dual score on the radar.</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/brunolerner/" target="_blank">🔗 LinkedIn</a><span class="signal-date">Pre-existing entry</span></div></div>
+    <div class="card escalate"><div class="card-top"><div><div class="card-name">Fausto Ibarra &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">Stealth</div></div><span class="badge badge-escalate">Escalate</span></div><div class="pedigree"><span class="chip chip-nu">ex-Nubank VP/GM</span><span class="chip">ex-CPO Kueski</span><span class="chip">ex-Stripe LatAm</span><span class="chip">ex-Google PM</span></div><div class="scores"><span class="score q5">Q5 &nbsp;A+</span><span class="score r4">R4 &nbsp;★★★★</span></div><span class="signal-type">Key Talent / Stealth Startup Spy #357</span><div class="signal-text">Head of Product at Nubank; built digital ecosystem and Kueski BNPL MX. 1 month stealth building AI-native products for creators. Priority outreach.</div><div class="domain-tag">#ai-native #creators</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/faustoibarra" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: Jul 16, 2026</span></div></div>
+    <div class="card escalate"><div class="card-top"><div><div class="card-name">Lucca Freire &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">UnblockPay</div></div><span class="badge badge-escalate">Escalate</span></div><div class="pedigree"><span class="chip">ex-Stone (API Lead, Pix/Open Finance)</span><span class="chip chip-exit">Exit: Trampolin → Stone</span></div><div class="scores"><span class="score q4">Q4 &nbsp;A</span><span class="score r5">R5 &nbsp;★★★★★</span></div><span class="signal-type">New Company / Seed Raise</span><div class="signal-text">Stablecoin-native banking API bridging blockchain to Pix. $4.5M seed (Prelude, Wintermute, Plug&Play, Crescera). R$300M+ volume year 1. Direct Prometheus workstream relevance.</div><div class="domain-tag">#stablecoin #payments-infra #pix</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/lucca-freire-b39758110/" target="_blank">🔗 LinkedIn</a><a class="card-link" href="https://www.unblockpay.com" target="_blank">🌐 unblockpay.com</a><span class="signal-date">Signal: Apr 30, 2026</span></div></div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="sec-hdr"><div class="sec-label">🟡 Identified — Under Review</div><div class="sec-desc">Q≥4 OR R≥4 · Strong pedigree, worth active tracking</div></div>
+  <div class="card-grid">
+    <div class="card identified"><div class="card-top"><div><div class="card-name">Guilherme Viebig &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">Stealth</div></div><span class="badge badge-identified">Identified</span></div><div class="pedigree"><span class="chip">Global VP Product, Rappi</span><span class="chip">Head Product, Inventa</span><span class="chip">FGV + MIT Sloan</span></div><div class="scores"><span class="score q4">Q4 &nbsp;A</span><span class="score r3">R3 &nbsp;★★★</span></div><span class="signal-type">Key Talent / Tech Talents LatAm #53</span><div class="signal-text">1 month stealth. LatAm product veteran (Rappi, Inventa). HQ São Paulo.</div><div class="domain-tag">#latam-product #stealth</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/guilhermeviebig-ai/" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: Jul 15, 2026</span></div></div>
+    <div class="card identified"><div class="card-top"><div><div class="card-name">Daniel Calonge &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">DuctorApp</div></div><span class="badge badge-identified">Identified</span></div><div class="pedigree"><span class="chip">ex-CIO Toro Investimentos</span><span class="chip chip-exit">Exit: Monetus → Toro/Santander</span></div><div class="scores"><span class="score q4">Q4 &nbsp;A</span><span class="score r3">R3 &nbsp;★★★</span></div><span class="signal-type">New Company / Tech Talents LatAm #52</span><div class="signal-text">Investment advisor automation. Serial founder with prior wealth management exit. HQ Belo Horizonte. Relevant to NuInvest / Investments Revamp.</div><div class="domain-tag">#wealth-mgmt #investments-revamp</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/danielcalonge/" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: Jul 1, 2026</span></div></div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="sec-hdr"><div class="sec-label">🔵 Monitoring — Watchlist</div><div class="sec-desc">Below threshold · Watching for next signal; auto-upgrades on new trigger</div></div>
+  <div class="card-grid">
+    <div class="card monitoring"><div class="card-top"><div><div class="card-name">Pedro Milanez</div><div class="card-company">ARO</div></div><span class="badge badge-monitoring">Monitoring</span></div><div class="pedigree"><span class="chip chip-nu">Nubank Employee #1</span><span class="chip">8+ years</span><span class="chip">ONEVC portfolio</span></div><div class="scores"><span class="score q5">Q5 &nbsp;A+</span><span class="score r5">R5 &nbsp;★★★★★</span></div><div class="signal-text">Co-founded AI credit agent platform ARO. Backed by ONEVC, 17Sigma. Monitoring — relationship-first, not cold outreach.</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/pedromilanez" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: May 12, 2026</span></div></div>
+    <div class="card monitoring"><div class="card-top"><div><div class="card-name">Santiago Buenahora &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">Primero AI</div></div><span class="badge badge-monitoring">Monitoring</span></div><div class="pedigree"><span class="chip">ex-Robinhood</span><span class="chip">ex-Affirm</span><span class="chip chip-exit">Exit: MarcoPolo (YC W21)</span><span class="chip">UPenn CS</span></div><div class="scores"><span class="score q3">Q3 &nbsp;B+</span><span class="score r4">R4 &nbsp;★★★★</span></div><div class="signal-text">AI platform for enterprise credit/inventory/margins. HQ Mexico City. NU Mexico alignment. Prometheus-adjacent.</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/santiago-buenahora/" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: Jul 15, 2026</span></div></div>
+    <div class="card monitoring"><div class="card-top"><div><div class="card-name">Fernando Seguim &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">Guardia</div></div><span class="badge badge-monitoring">Monitoring</span></div><div class="pedigree"><span class="chip">Sr. EM Core Banking &amp; Ledger, Nomad</span><span class="chip">Head Engineering, Bankly</span></div><div class="scores"><span class="score q3">Q3 &nbsp;B+</span><span class="score r4">R4 &nbsp;★★★★</span></div><div class="signal-text">Founded Guardia — AI-driven transactional reconciliation (co-founder: Douglas Picolotto). Deep core banking &amp; BaaS. HQ São Paulo.</div><div class="domain-tag">#core-banking #baas #infra</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/fernandoseguim/" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: Jul 1, 2026</span></div></div>
+    <div class="card monitoring"><div class="card-top"><div><div class="card-name">Ariel Amar &nbsp;<span class="new-tag">NEW</span></div><div class="card-company">Westy</div></div><span class="badge badge-monitoring">Monitoring</span></div><div class="pedigree"><span class="chip chip-exit">Co-Founder, Lemon Energia</span><span class="chip">Equity Research, Itaú BBA</span><span class="chip">Insper</span></div><div class="scores"><span class="score q3">Q3 &nbsp;B+</span><span class="score r3">R3 &nbsp;★★★</span></div><div class="signal-text">AI-powered corporate account, 5% cashback. 7-person team. 2-year stealth now public. Corporate spend / embedded finance.</div><div class="domain-tag">#corporate-banking #embedded-finance</div><div class="card-links"><a class="card-link" href="https://www.linkedin.com/in/arielbamar/" target="_blank">🔗 LinkedIn</a><span class="signal-date">Signal: Jul 1, 2026</span></div></div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">📊 <a href="https://docs.google.com/spreadsheets/d/1Kb2kfla-ZPRAyHvxS0ZNhAhyT4qNwBOmVU7utfmhhe0" style="color:#0052cc;text-decoration:none;font-weight:600;">Open Google Sheet</a> &nbsp;·&nbsp; 📄 <a href="https://docs.google.com/document/d/19V-pOHfPSoT2CtaW4vP4mEYplLROOxhFIBjuMEm5Nxg/edit" style="color:#0052cc;text-decoration:none;">Playbook v1.1</a></div>
+    <div class="footer-right">CorpDev Intel · Nubank · Jul 21, 2026</div>
+  </div>
+
+</div>
+</body>
+</html>
